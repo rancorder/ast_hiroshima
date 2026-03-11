@@ -6,7 +6,8 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center items-start px-[8vw] md:px-[10vw] overflow-hidden"
+      className="relative overflow-hidden"
+      style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}
     >
       {/* Background grid */}
       <div
@@ -29,7 +30,7 @@ export default function Hero() {
       />
 
       {/* Content */}
-      <div className="relative z-10 max-w-3xl">
+      <div className="relative z-10 w-full max-w-3xl mx-auto px-[8vw] md:px-[10vw]">
         <FadeIn delay={0.05}>
           <p className="text-[10px] md:text-[11px] tracking-[0.32em] text-[#64c8b8] uppercase mb-8 md:mb-10">
             株式会社アスト ／ 機械設計・設備レイアウト設計
@@ -51,7 +52,7 @@ export default function Hero() {
         </FadeIn>
 
         <FadeIn delay={0.38}>
-          <p className="text-[13px] md:text-[15px] text-white/40 leading-[1.9] tracking-[0.04em] mb-14 max-w-[400px]">
+          <p className="text-[13px] md:text-[15px] leading-[1.8] tracking-[0.04em] mb-14 max-w-[400px]" style={{ color: "rgba(220,240,235,0.75)" }}>
             20年の経験 × 現場アイデア × 3Dシミュレーション
             <br />
             設計段階で問題を潰す。それがアストの仕事です。
