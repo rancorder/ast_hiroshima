@@ -163,19 +163,28 @@ export default function Factory3D() {
     const mount = mountRef.current;
     if (!mount) return;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-    renderer.setSize(mount.offsetWidth, mount.offsetHeight);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    mount.appendChild(renderer.domElement);
+    let raf: number;
+    let initialized = false;
+    let rendererRef: THREE.WebGLRenderer | null = null;
 
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x071420);
-    scene.fog = new THREE.FogExp2(0x071420, 0.032);
+    const initScene = (W: number, H: number) => {
+      if (initialized || W < 10 || H < 10) return;
+      initialized = true;
 
-    const camera = new THREE.PerspectiveCamera(45, mount.offsetWidth / mount.offsetHeight, 0.1, 100);
-    camera.position.set(0, 4.5, 7.2);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      rendererRef = renderer;
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(W, H);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+      mount.appendChild(renderer.domElement);
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x071420);
+      scene.fog = new THREE.FogExp2(0x071420, 0.032);
+
+      const camera = new THREE.PerspectiveCamera(45, W / H, 0.1, 100);
+      camera.position.set(0, 4.5, 7.2);
 
     scene.add(new THREE.AmbientLight(0x182840, 1.1));
     const sun = new THREE.DirectionalLight(0xffffff, 1.5);
@@ -256,61 +265,76 @@ export default function Factory3D() {
     const expl = { target: 0, progress: 0 };
     const raycaster = new THREE.Raycaster();
 
-    threeRef.current = { renderer, scene, camera, meshMap, origPos, expPos, hotspots, cam, expl, raycaster };
+      threeRef.current = { renderer, scene, camera, meshMap, origPos, expPos, hotspots, cam, expl, raycaster };
 
-    let raf: number;
-    const animate = () => {
-      raf = requestAnimationFrame(animate);
-      const t = performance.now() * 0.001;
+      const animate = () => {
+        raf = requestAnimationFrame(animate);
+        const t = performance.now() * 0.001;
 
-      ['rmid','rtop','ra1','ra2','ra3'].forEach(k => {
-        if (meshMap[k]) meshMap[k].rotation.y += 0.009;
-      });
+        ['rmid','rtop','ra1','ra2','ra3'].forEach(k => {
+          if (meshMap[k]) meshMap[k].rotation.y += 0.009;
+        });
 
-      expl.progress += (expl.target - expl.progress) * 0.048;
-      PARTS.forEach(([id]) => {
-        const m = meshMap[id];
-        if (m && origPos[id] && expPos[id])
-          m.position.lerpVectors(origPos[id], expPos[id], expl.progress);
-      });
+        expl.progress += (expl.target - expl.progress) * 0.048;
+        PARTS.forEach(([id]) => {
+          const m = meshMap[id];
+          if (m && origPos[id] && expPos[id])
+            m.position.lerpVectors(origPos[id], expPos[id], expl.progress);
+        });
 
-      hotspots.forEach(({ ring, dot, partId, yOff, phase }) => {
-        const pm = meshMap[partId];
-        if (!pm) return;
-        const py = pm.position.y + yOff;
-        const pulse = 1 + Math.sin(t * 2.6 + phase) * 0.22;
-        [ring, dot].forEach(m => m.position.set(pm.position.x, py, pm.position.z));
-        ring.scale.setScalar(pulse);
-        (ring.material as THREE.MeshBasicMaterial).opacity = 0.35 + Math.sin(t * 2.6 + phase) * 0.45;
-      });
+        hotspots.forEach(({ ring, dot, partId, yOff, phase }) => {
+          const pm = meshMap[partId];
+          if (!pm) return;
+          const py = pm.position.y + yOff;
+          const pulse = 1 + Math.sin(t * 2.6 + phase) * 0.22;
+          [ring, dot].forEach(m => m.position.set(pm.position.x, py, pm.position.z));
+          ring.scale.setScalar(pulse);
+          (ring.material as THREE.MeshBasicMaterial).opacity = 0.35 + Math.sin(t * 2.6 + phase) * 0.45;
+        });
 
-      const dr = dragRef.current;
-      const dist = cam.tPos.clone().sub(cam.tLook).length();
-      cam.tPos.x = cam.tLook.x + dist * Math.sin(dr.rotY) * Math.cos(dr.rotX);
-      cam.tPos.y = cam.tLook.y + dist * Math.sin(dr.rotX);
-      cam.tPos.z = cam.tLook.z + dist * Math.cos(dr.rotY) * Math.cos(dr.rotX);
+        const dr = dragRef.current;
+        const dist = cam.tPos.clone().sub(cam.tLook).length();
+        cam.tPos.x = cam.tLook.x + dist * Math.sin(dr.rotY) * Math.cos(dr.rotX);
+        cam.tPos.y = cam.tLook.y + dist * Math.sin(dr.rotX);
+        cam.tPos.z = cam.tLook.z + dist * Math.cos(dr.rotY) * Math.cos(dr.rotX);
 
-      cam.cPos.lerp(cam.tPos, 0.04);
-      cam.cLook.lerp(cam.tLook, 0.04);
-      camera.position.set(cam.cPos.x + cam.mx * 0.22, cam.cPos.y + cam.my * 0.1, cam.cPos.z);
-      camera.lookAt(cam.cLook);
-      renderer.render(scene, camera);
-    };
-    animate();
+        cam.cPos.lerp(cam.tPos, 0.04);
+        cam.cLook.lerp(cam.tLook, 0.04);
+        camera.position.set(cam.cPos.x + cam.mx * 0.22, cam.cPos.y + cam.my * 0.1, cam.cPos.z);
+        camera.lookAt(cam.cLook);
+        renderer.render(scene, camera);
+      };
+      animate();
+    }; // end initScene
 
-    const onResize = () => {
-      const w = mount.offsetWidth, h = mount.offsetHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-    window.addEventListener('resize', onResize);
+    // ResizeObserver: fires with real dimensions as soon as layout is ready
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        if (!initialized) {
+          initScene(Math.floor(width), Math.floor(height));
+        } else if (rendererRef && threeRef.current) {
+          const { camera, renderer } = threeRef.current;
+          camera.aspect = width / height;
+          camera.updateProjectionMatrix();
+          renderer.setSize(Math.floor(width), Math.floor(height));
+        }
+      }
+    });
+    ro.observe(mount);
+
+    // Also try immediately (handles cases where ResizeObserver fires late)
+    if (mount.offsetWidth > 10 && mount.offsetHeight > 10) {
+      initScene(mount.offsetWidth, mount.offsetHeight);
+    }
 
     return () => {
+      ro.disconnect();
       cancelAnimationFrame(raf);
-      window.removeEventListener('resize', onResize);
-      renderer.dispose();
-      if (mount.contains(renderer.domElement)) mount.removeChild(renderer.domElement);
+      if (rendererRef) {
+        rendererRef.dispose();
+        if (mount.contains(rendererRef.domElement)) mount.removeChild(rendererRef.domElement);
+      }
     };
   }, []);
 
