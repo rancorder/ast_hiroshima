@@ -40,7 +40,7 @@ export default function Solution() {
           答えは<br />
           <strong className="font-bold text-white">経験 × アイデア × 3D</strong>
         </h2>
-        <p className="text-[13px] text-white/40 leading-[1.9] max-w-sm tracking-[0.04em]">
+        <p className="text-[13px] text-white/70 leading-[1.9] max-w-sm tracking-[0.04em]">
           3つの力が重なるとき、手戻りは設計段階で消える。
         </p>
       </FadeIn>
@@ -65,7 +65,7 @@ export default function Solution() {
               <h3 className="font-serif text-[20px] md:text-[22px] font-bold mb-4 text-white">
                 {p.title}
               </h3>
-              <p className="text-[12px] md:text-[13px] text-white/45 leading-[1.95]">
+              <p className="text-[12px] md:text-[13px] text-white/70 leading-[1.95]">
                 {p.desc}
               </p>
             </div>

@@ -20,7 +20,7 @@ export default function Stats() {
                   {s.unit}
                 </span>
               </div>
-              <div className="text-[11px] text-white/38 tracking-[0.1em] leading-[1.9] whitespace-pre-line">
+              <div className="text-[11px] text-white/65 tracking-[0.1em] leading-[1.9] whitespace-pre-line">
                 {s.label}
               </div>
             </div>

@@ -69,7 +69,7 @@ export default function Hero() {
             </Link>
             <Link
               href="#problem"
-              className="inline-flex items-center gap-3 px-10 py-5 text-white/40 text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 hover:text-white/70"
+              className="inline-flex items-center gap-3 px-10 py-5 text-white/70 text-[11px] tracking-[0.18em] uppercase transition-colors duration-300 hover:text-white/70"
             >
               課題を確認する <span className="text-base">↓</span>
             </Link>

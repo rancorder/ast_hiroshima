@@ -53,7 +53,7 @@ export default function Process() {
                 {s.n}
               </div>
               <div className="font-serif text-[15px] font-semibold mb-2 text-white">{s.title}</div>
-              <div className="text-[11px] text-white/40 leading-[1.85]">{s.desc}</div>
+              <div className="text-[11px] text-white/70 leading-[1.85]">{s.desc}</div>
             </button>
           ))}
         </div>
@@ -70,7 +70,7 @@ export default function Process() {
                 {s.n}
               </div>
               <div className="font-serif text-[15px] font-semibold mb-1 text-white">{s.title}</div>
-              <div className="text-[11px] text-white/40 leading-[1.85]">{s.desc}</div>
+              <div className="text-[11px] text-white/70 leading-[1.85]">{s.desc}</div>
             </button>
           ))}
         </div>

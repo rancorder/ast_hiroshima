@@ -45,7 +45,7 @@ export default function Problem() {
           <br />
           手戻りです。
         </h2>
-        <p className="text-[13px] md:text-[14px] text-white/40 leading-[1.9] tracking-[0.04em] max-w-md">
+        <p className="text-[13px] md:text-[14px] text-white/70 leading-[1.9] tracking-[0.04em] max-w-md">
           着工後に発覚するミスは、設計段階で防げたはずの損失。
           <br className="hidden md:block" />
           問題の発生源は、常に「見えていない設計」にあります。
@@ -66,7 +66,7 @@ export default function Problem() {
               <h3 className="font-serif text-[17px] font-semibold mb-3 tracking-[0.03em]">
                 {item.title}
               </h3>
-              <p className="text-[12px] text-white/40 leading-[1.95]">{item.desc}</p>
+              <p className="text-[12px] text-white/70 leading-[1.95]">{item.desc}</p>
             </div>
           </FadeIn>
         ))}

@@ -18,7 +18,7 @@ export default function Viewer() {
           <h2 className="font-serif text-[clamp(28px,4.5vw,58px)] font-light leading-[1.38] mb-4">
             設計を<strong className="font-bold text-white">3Dで体験</strong>する
           </h2>
-          <p className="text-[12px] text-white/35 tracking-[0.1em]">
+          <p className="text-[12px] text-white/65 tracking-[0.1em]">
             ドラッグで回転 · 施工前に動線を確認 · 干渉を可視化
           </p>
         </FadeIn>
@@ -48,7 +48,7 @@ export default function Viewer() {
       {/* Bottom note */}
       <div className="px-[8vw] md:px-[10vw] py-10 relative z-10">
         <FadeIn>
-          <p className="text-[11px] text-white/30 leading-[1.9] max-w-md tracking-[0.04em]">
+          <p className="text-[11px] text-white/65 leading-[1.9] max-w-md tracking-[0.04em]">
             実案件では設備・動線・安全エリアをすべて3D上で検証。
             着工前に「見えない問題」を完全に潰します。
           </p>

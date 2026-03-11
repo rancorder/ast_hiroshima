@@ -43,7 +43,7 @@ export default function CTA() {
             <strong className="font-bold text-white">なくしたい方へ。</strong>
           </h2>
 
-          <p className="text-[13px] text-white/40 leading-[1.95] mb-16 tracking-[0.04em]">
+          <p className="text-[13px] text-white/70 leading-[1.95] mb-16 tracking-[0.04em]">
             まずはお気軽にご相談ください。
             <br />
             現在の課題をお聞きし、最適なアプローチをご提案します。
