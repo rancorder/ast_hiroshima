@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #050c12;
+  }
+
+  /* Make font-serif map to Noto Serif JP (loaded dynamically) */
+  .font-serif {
+    font-family: 'Noto Serif JP', 'DM Serif Display', Georgia, serif;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: rgba(100, 200, 180, 0.25);
+    color: #fff;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar       { width: 4px; }
+  ::-webkit-scrollbar-track { background: #050c12; }
+  ::-webkit-scrollbar-thumb { background: rgba(100,200,180,0.3); border-radius: 2px; }
+}
