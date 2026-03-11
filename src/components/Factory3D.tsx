@@ -324,9 +324,9 @@ export default function Factory3D() {
     ro.observe(mount);
 
     // Also try immediately (handles cases where ResizeObserver fires late)
-    if (mount.offsetWidth > 10 && mount.offsetHeight > 10) {
-      initScene(mount.offsetWidth, mount.offsetHeight);
-    }
+    const width = mount.clientWidth || window.innerWidth;
+    const height = mount.clientHeight || window.innerHeight;
+    initScene(width, height);
 
     return () => {
       ro.disconnect();
@@ -453,7 +453,7 @@ export default function Factory3D() {
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
-    <div style={{ width:'100%', height:'100%', position:'relative', background:'transparent',
+    <div style={{ width:'100%', height:'100vh', position:'relative', background:'transparent',
       fontFamily:"'Noto Sans JP','Helvetica Neue',sans-serif" }}>
       <style>{`
         @keyframes _slideUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
